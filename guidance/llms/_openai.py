@@ -121,7 +121,7 @@ class OpenAI(LLM):
                  api_key=None, api_type="open_ai", api_base=None, api_version=None, deployment_id=None,
                  temperature=0.0, chat_mode="auto", organization=None, rest_call=False,
                  allowed_special_tokens={"<|endoftext|>", "<|endofprompt|>"},
-                 token=None, endpoint=None, encoding_name=None):
+                 token=None, endpoint=None, encoding_name=None, tokenizer=None):
         super().__init__()
 
         # map old param values
@@ -177,7 +177,7 @@ class OpenAI(LLM):
         import tiktoken
         if encoding_name is None:
             encoding_name = tiktoken.encoding_for_model(model).name
-        self._tokenizer = tiktoken.get_encoding(encoding_name)
+        self._tokenizer = tiktoken.get_encoding(encoding_name) if tokenizer is None else tokenizer
         self.chat_mode = chat_mode
         
         self.allowed_special_tokens = allowed_special_tokens
